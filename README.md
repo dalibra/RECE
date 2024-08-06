@@ -1,11 +1,13 @@
 # RECE: Reduced Cross-Entropy Loss for Large-Catalogue Sequential Recommenders
 
-This repository contains code for the paper "RECE: Reduced Cross-Entropy Loss for Large-Catalogue Sequential Recommenders".
+Danil Gusak*, Gleb Mezentsev*, Ivan Oseledets, Evgeny Frolov
 
-## Abstract
+[[`Paper`](https://arxiv.org/abs/2408.02354)] [[`BibTeX`](#citing-rece)]
+
+![RECE pipeline](assets/rece_part_pipeline.jpg?raw=true)
 
 Scalability is a major challenge in modern recommender systems. In sequential recommendations, full Cross-Entropy (CE) loss achieves state-of-the-art recommendation quality but consumes excessive GPU memory with large item catalogs, limiting its practicality.
-Using a GPU-efficient locality-sensitive hashing-like algorithm for approximating large tensor of logits, this paper introduces a novel RECE (REduced Cross-Entropy) loss. RECE significantly reduces memory consumption while allowing one to enjoy the state-of-the-art performance of full CE loss. Experimental results on various datasets show that RECE cuts training peak memory usage by up to 12 times compared to existing methods while retaining or exceeding performance metrics of CE loss. The approach also opens up new possibilities for large-scale applications in other domains.
+Using a GPU-efficient locality-sensitive hashing-like algorithm for approximating large tensor of logits, this paper introduces a novel **RECE (REduced Cross-Entropy)** loss. RECE significantly reduces memory consumption while allowing one to enjoy the state-of-the-art performance of full CE loss. Experimental results on various datasets show that RECE cuts training peak memory usage by up to 12 times compared to existing methods while retaining or exceeding performance metrics of CE loss. The approach also opens up new possibilities for large-scale applications in other domains.
 
 ## Requirements Installation
 
@@ -128,3 +130,18 @@ $$n_b^* \cdot r \cdot max(\cdot s \cdot l, C) = (4 \cdot r \cdot s \cdot l \cdot
 $$n_b^* = \sqrt{4\cdot \alpha_{bc} \cdot min(s\cdot l, C) \cdot (1+2n_{ec})}$$
 
 Then, the total memory complexity is $2 r\sqrt{\alpha_{bc} (1+2 n_{ec}) \cdot \min(C, s\cdot l)} \cdot \max(C, s\cdot l)$.
+
+## Citing RECE
+
+Please use the following BibTeX entry:
+
+```bibtex
+@misc{gusak2024recereducedcrossentropyloss,
+      title={RECE: Reduced Cross-Entropy Loss for Large-Catalogue Sequential Recommenders}, 
+      author={Gusak, Danil and Mezentsev, Gleb and Oseledets, Ivan and Frolov, Evgeny},
+      year={2024},
+      eprint={2408.02354},
+      archivePrefix={arXiv},
+      url={https://arxiv.org/abs/2408.02354}, 
+}
+```
