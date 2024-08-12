@@ -21,11 +21,11 @@ conda activate rce
 
 ## Experiments Reproduction
 
-When running the code for the experiments, you can pass a +project_name={PNAME} +task_name{TNAME} option, in which case the intermediate validation metrics and the final test metrics will be reported to a ClearML server and could be later be viewed in a web interface, otherwise only the final test metrics will be printed to the terminal.
+When running the code for the experiments, you can pass a +project_name={PNAME} +task_name{TNAME} option, in which case the intermediate validation metrics and the final test metrics will be reported to a ClearML server and could be later viewed in a web interface, otherwise only the final test metrics will be printed to the terminal.
 
 ### Impact of different components on peak GPU memory when training SASRec with Cross-Entropy loss
 
-To generate the data used for the corresponding plot you should run the following command with the required parameter values:
+To generate the data used for the corresponding plot, you should run the following command with the required parameter values:
 
 ```bash
 python measure_ce_memory.py --bs={BS} --catalog={CATALOG_SIZE}
@@ -37,7 +37,7 @@ To reproduce the best results from the paper (in terms of NDCG@10) for each mode
 ```bash
 python train.py --config-path={CONFIG_PATH} --config-name={CONFIG_NAME} data_path={DATA_PATH}
 ```
-For example to reproduce the best results of the $CE$ model on the Yelp dataset with temporal train/test splitting, you should run
+For example, to reproduce the best results of the $CE$ model on the Yelp dataset with temporal train/test splitting, you should run
 ```bash
 python train.py --config-path=configs/temporal/yelp --config-name='ce' data_path=data/yelp.csv
 ```
@@ -75,7 +75,7 @@ The parameters of the underlying transformer are selected accoring to the origin
 ### Optimal bucket size
 
 For all experiments presented in the paper an optimal in the following sense bucket size was selected.
-There three possible memory bottlenecks of our algorithm, depending on data and model parameters.
+There are three possible memory bottlenecks of our algorithm, depending on data and model parameters.
 The first two bottlenecks are storing the projections of $X$ and $Y$ onto $B$, which are later used for bucket assigment.
 
 ```python
@@ -88,7 +88,7 @@ The first two bottlenecks are storing the projections of $X$ and $Y$ onto $B$, w
     y_ind = torch.argsort(torch.argmax(y_bucket, dim=1)) # (rounds, ds)
     del y_bucket, buckets
 ```
-As they are calculated in "no_grad" mode and a deleted right after the assigment indices are calculated, the peak memory usage of our loss function at the moment after index assigment is $max(r \cdot n_b \cdot s \cdot l, r \cdot n_b \cdot C)$, where $s$ is a batch size, $l$ is a sequence length, $C$ is a catalog size, $r$ is a number of rounds and $n_b$ is a number of buckets.
+As they are calculated in "no_grad" mode and deleted right after the assignment indices are calculated, the peak memory usage of our loss function at the moment after index assignment is $max(r \cdot n_b \cdot s \cdot l, r \cdot n_b \cdot C)$, where $s$ is a batch size, $l$ is a sequence length, $C$ is a catalog size, $r$ is a number of rounds and $n_b$ is a number of buckets.
 
 The third potential bottleneck is calculating the number of duplicate pairs within chunks over rounds.
 
@@ -119,7 +119,7 @@ catalog_counts2 = torch.searchsorted(catalog_sorted, catalog, side='left', out_i
 del catalog_sorted
 catalog_counts -= catalog_counts2
 ```
-We utilized torch.seachsorted function for duplicates calculation, which results in storing 4 tensors of the same size (catalog, catalog_sorted, catalog_counts, catalog_counts2) right before the duplicates are counted. The total size of the occupied memory for these tensors is $4\cdot r \cdot n_c \cdot c_x \cdot c_y \cdot (1+2n_{ec})$, where $n_c$ is the number of chunks, $c_x$ is the number of elements from the input sequence in chunk, $c_y$ is the number of elements from the catalog in chunk and $n_{ec}$ is the number of neighbouring chunks we look into. If we take into account that $c_x=(s\cdot l) / n_c$, $c_y = C / n_c$ and $n_c = n_b / \alpha_{bc}$, then the peak memory is $(4 \cdot r \cdot s \cdot l \cdot C \cdot (1+2n_{ec}) \cdot \alpha_{bc}) / n_b$.
+We utilized torch.seachsorted function for duplicates calculation, which results in storing 4 tensors of the same size (catalog, catalog_sorted, catalog_counts, catalog_counts2) right before the duplicates are counted. The total size of the occupied memory for these tensors is $4\cdot r \cdot n_c \cdot c_x \cdot c_y \cdot (1+2n_{ec})$, where $n_c$ is the number of chunks, $c_x$ is the number of elements from the input sequence in chunk, $c_y$ is the number of elements from the catalog in chunk and $n_{ec}$ is the number of neighboring chunks we look into. If we take into account that $c_x=(s\cdot l) / n_c$, $c_y = C / n_c$ and $n_c = n_b / \alpha_{bc}$, then the peak memory is $(4 \cdot r \cdot s \cdot l \cdot C \cdot (1+2n_{ec}) \cdot \alpha_{bc}) / n_b$.
 
 As the number of buckets grow, the reduction in memory required to store the logits tensor (as well as duplicate counts tensor), increases, as the logits are only caclulated only inside buckets, and more buckets mean smaller buckets. However, if the number of buckets is too large, then calculating and storing projections of $X$ and $Y$ becomes more expensive than the calculation of the logits itself.
 
@@ -136,12 +136,10 @@ Then, the total memory complexity is $2 r\sqrt{\alpha_{bc} (1+2 n_{ec}) \cdot \m
 Please use the following BibTeX entry:
 
 ```bibtex
-@misc{gusak2024recereducedcrossentropyloss,
-      title={RECE: Reduced Cross-Entropy Loss for Large-Catalogue Sequential Recommenders}, 
-      author={Gusak, Danil and Mezentsev, Gleb and Oseledets, Ivan and Frolov, Evgeny},
-      year={2024},
-      eprint={2408.02354},
-      archivePrefix={arXiv},
-      url={https://arxiv.org/abs/2408.02354}, 
+@article{gusak2024rece,
+  title={RECE: Reduced Cross-Entropy Loss for Large-Catalogue Sequential Recommenders},
+  author={Gusak, Danil and Mezentsev, Gleb and Oseledets, Ivan and Frolov, Evgeny},
+  journal={arXiv preprint arXiv:2408.02354},
+  year={2024}
 }
 ```
