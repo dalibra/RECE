@@ -39,7 +39,7 @@ python train.py --config-path={CONFIG_PATH} --config-name={CONFIG_NAME} data_pat
 ```
 For example, to reproduce the best results of the $CE$ model on the Yelp dataset with temporal train/test splitting, you should run
 ```bash
-python train.py --config-path=configs/temporal/yelp --config-name='ce' data_path=data/yelp.csv
+python train.py --config-path=configs/temporal/gowalla --config-name='ce' data_path=data/gowalla.csv
 ```
 For the $RECE$ model on Gowalla there are both configs for the best NDCG@10 performance (rece_max_ndcg.yaml) and for the same performance as the second best model but with a reduced memory consumption (rece_same_ndcg.yaml).
 
