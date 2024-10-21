@@ -136,10 +136,11 @@ Then, the total memory complexity is $2 r\sqrt{\alpha_{bc} (1+2 n_{ec}) \cdot \m
 Please use the following BibTeX entry:
 
 ```bibtex
-@article{gusak2024rece,
+@inproceedings{gusak2024rece,
   title={RECE: Reduced Cross-Entropy Loss for Large-Catalogue Sequential Recommenders},
   author={Gusak, Danil and Mezentsev, Gleb and Oseledets, Ivan and Frolov, Evgeny},
-  journal={arXiv preprint arXiv:2408.02354},
+  booktitle={Proceedings of the 33rd ACM International Conference on Information and Knowledge Management},
+  pages = {3772–3776},
   year={2024}
 }
 ```
