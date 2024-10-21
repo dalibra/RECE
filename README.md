@@ -37,7 +37,7 @@ To reproduce the best results from the paper (in terms of NDCG@10) for each mode
 ```bash
 python train.py --config-path={CONFIG_PATH} --config-name={CONFIG_NAME} data_path={DATA_PATH}
 ```
-For example, to reproduce the best results of the $CE$ model on the Yelp dataset with temporal train/test splitting, you should run
+For example, to reproduce the best results of the $CE$ model on the Gowalla dataset with temporal train/test splitting, you should run
 ```bash
 python train.py --config-path=configs/temporal/gowalla --config-name='ce' data_path=data/gowalla.csv
 ```
