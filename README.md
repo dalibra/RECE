@@ -140,7 +140,7 @@ Please use the following BibTeX entry:
   title={RECE: Reduced Cross-Entropy Loss for Large-Catalogue Sequential Recommenders},
   author={Gusak, Danil and Mezentsev, Gleb and Oseledets, Ivan and Frolov, Evgeny},
   booktitle={Proceedings of the 33rd ACM International Conference on Information and Knowledge Management},
-  pages = {3772–3776},
+  pages={3772–3776},
   year={2024}
 }
 ```
